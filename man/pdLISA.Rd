@@ -4,7 +4,7 @@
 \alias{pdLISA}
 \title{Product density LISA functions}
 \usage{
-pdLISA(xy, s.region, ds, ks = "box", hs)
+pdLISA(xy, s.region, ds, ks = "epanech", hs)
 }
 \arguments{
 \item{xy}{Spatial coordinates \eqn{(x,y)} of the point pattern.}
@@ -13,14 +13,14 @@ pdLISA(xy, s.region, ds, ks = "box", hs)
 
 \item{ds}{A vector of distances \code{u} at which \eqn{\rho^{(2)i}(u)} is computed.}
 
-\item{ks}{A kernel function for the spatial distances. The default is the \code{"box"} kernel. It can also be \code{"epanech"} for the Epanechnikov kernel, or \code{"biweight"}.}
+\item{ks}{A kernel function for the spatial distances. The default is \code{"epanech"} the Epanechnikov kernel. It can also be \code{"box"} kernel, or \code{"biweight"}.}
 
 \item{hs}{A bandwidth of the kernel function \code{ks}.}
 }
 \value{
 A list containing:
 \itemize{
-  \item \code{lisa}: A vector containing the values of \eqn{\widehat{\rho}^{(2)i}(r)} estimated.
+  \item \code{lisa}: A matrix containing the values of the estimation of \eqn{\widehat{\rho}^{(2)i}(r)}  for each one of \eqn{n} points of the process by rows.
   \item \code{ds}: If \code{ds} is missing, a vector of distances \code{u} at which \eqn{\rho^{(2)i}(u)} is computed under the restriction \eqn{0<\epsilon<r}.
   \item \code{kernel}: A vector of names and bandwidth of the spatial kernel.
   \item \code{s.region}: Parameter passed in argument.
@@ -29,22 +29,24 @@ A list containing:
 \description{
 Computes an edge-corrected kernel estimator of the product density LISA functions.
 }
+\details{
+An individual product density LISA functions \eqn{\rho^{(2)i}(.)} should reveal the extent of the contribution of the event \eqn{u_i} to the global estimator of the second-order product density \eqn{\rho^{(2)}(.)}, and may provide a further description of structure in the data (e.g., determining events with similar local structure through dissimilarity measures of the individual LISA functions), for more details see Cressie and Collins (2001).
+}
 \examples{
 ## Not run:
 #################
 
 # Realisations of the homogeneous Poisson processes
 pp <- rpoispp(100)
-xy <- cbind(pp$x,pp$y)
+plot(pp)
 
-# R plot
-plot(xy,xlab="x",ylab="y")
+xy <- cbind(pp$x,pp$y)
 
 # This function provides an edge-corrected kernel estimator of the porduct density LISA functions.
 out <- pdLISA(xy)
 out
 
-# R plot - Temporal mark variogram
+# R plot
 par(mfrow=c(1,1))
 plot(out$ds,out$lisa[1,], type="l", xlab="dist", ylab="LISA",
 ylim=(c(min(out$lisa),max(out$lisa))),main="Product density LISA functions")

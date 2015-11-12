@@ -51,7 +51,7 @@ par(mfrow=c(1,1))
 plot(out$ds,out$lisa[1,], type="l", xlab="dist", ylab="LISA",
 ylim=(c(min(out$lisa),max(out$lisa))),main="Product density LISA functions")
 for (i in 2:length(xy[,1])){lines(out$ds,out$lisa[i,])}
-lines(out$ds,rep((length(xy[,1])-2)*(length(xy[,1])-1)+length(xy[,1]),length(out$ds)),col="red")
+lines(out$ds,rep((length(xy[,1])-2)*(length(xy[,1])-1)+(length(xy[,1])-1),length(out$ds)),col="red")
 
 ## End(Not run)
 }

@@ -29,10 +29,46 @@ A list containing:
 \description{
 Computes an edge-corrected kernel estimator of the second-order product density function.
 }
+\details{
+When describing variability and correlations of any pattern, we have to consider pairs of events, and the corresponding characteristics are called second-order measures such as the second-order product density function. The second-order product density function provides a global measure of the covariance structure by summing over the contributions from each event observed in the process and can be used to discriminate amongst several spatial point structures, see e.g. Illian et al. (2008). The second-order product density function is of interest as can be used to discriminate amongst several spatial point structures. For example, for a spatial Poisson process \eqn{\rho^{(2)}(u)=\rho^{2}}. Values of the second-order product density function larger than \eqn{\rho^{2}} indicate that the interpoint distances around \eqn{r} are relatively more frequent compared to those in a spatial Poisson process, which is typical of a spatial cluster process, and conversely, values of \eqn{\rho^{(2)}(u)} smaller than \eqn{\rho^{2}} indicate that the corresponding distances are rare and this is typical of a spatial inhibition process, for more details see Illian et al. (2008).
+}
+\examples{
+## Not run:
+#################
+
+# Realisations of the homogeneous Poisson processes
+pp <- rpoispp(100)
+plot(pp)
+
+xy <- cbind(pp$x,pp$y)
+
+# This function provides an edge-corrected kernel estimator of the porduct density LISA functions.
+out <- sopdf(xy)
+out
+
+# R plot
+par(mfrow=c(1,1))
+plot(out$ds,out$sopd, type="l", xlab="dist", ylab="Product density",
+ylim=(c(min(out$sopd,length(xy[,1])*(length(xy[,1])-1)),max(out$sopd,length(xy[,1])*(length(xy[,1])-1)))),
+main="Product density function")
+lines(out$ds,rep(length(xy[,1])*(length(xy[,1])-1),length(out$ds)),col="red")
+
+## End(Not run)
+}
 \author{
 Francisco J. Rodriguez-Cortes <cortesf@uji.es> \url{https://fjrodriguezcortes.wordpress.com}
 }
 \references{
 Baddeley, A. and Turner, J. (2005). \code{spatstat}: An R Package for Analyzing Spatial Point Pattens. Journal of Statistical Software 12, 1-42.
+
+Cressie, N. and Collins, L. B. (2001). Analysis of spatial point patterns using bundles of product density LISA functions. Journal of Agricultural, Biological, and Environmental Statistics 6, 118-135.
+
+Cressie, N. and Collins, L. B. (2001). Patterns in spatial point locations: Local indicators of spatial association in a minefield with clutter Naval Research Logistics (NRL), John Wiley & Sons, Inc. 48, 333-347.
+
+Fiksel, T. (1988). Edge-corrected density estimators for point processes, Statistics 19, 67-75.
+
+Illian, J B., Penttinen, A., Stoyan, H. and Stoyan, D. (2008). Statistical Analysis and Modelling of Spatial Point Patterns. John Wiley and Sons, London.
+
+Stoyan, D. and Stoyan, H. (1994). Fractals, random shapes, and point fields: methods of geometrical statistics. Chichester: Wiley.
 }
 

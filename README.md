@@ -22,7 +22,7 @@ install_github('frajaroco/scdcLISA')
 	title = {scdcLISA: Sptial cluster detection and classification through product density LISA functions},
 	year = {2016},
 	note = {GitHub repository},
-	url = {\url{https://github.com/frajaroco/mvstpp}}
+	url = {\url{https://github.com/frajaroco/scdcLISA}}
 }
 
 ```

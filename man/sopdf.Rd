@@ -36,13 +36,13 @@ When describing variability and correlations of any pattern, we have to consider
 ## Not run:
 #################
 
-# Realisations of the homogeneous Poisson processes
+# Realisation of the homogeneous Poisson processes
 pp <- rpoispp(100)
 plot(pp)
 
 xy <- cbind(pp$x,pp$y)
 
-# This function provides an edge-corrected kernel estimator of the porduct density LISA functions.
+# This function provides an edge-corrected kernel estimator of the product density LISA functions.
 out <- sopdf(xy)
 out
 

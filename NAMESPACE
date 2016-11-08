@@ -1,6 +1,5 @@
 useDynLib(scdcLISA)
 exportPattern("^[[:alpha:]]+")
-
 import(splancs)
 import(spatstat)
 import(KernSmooth)

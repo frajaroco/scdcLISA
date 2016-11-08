@@ -2,7 +2,7 @@
 
 Description...
 
-Basic toolkit for the exploration and analysis of the spatio-temporal point patterns through the mark variograms. This repository is based on `spatstat` and `KernSmooth` packages.
+This repository is based on `spatstat` and `KernSmooth` packages.
 
 ## Installation guide
 

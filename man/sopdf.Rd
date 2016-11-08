@@ -36,7 +36,7 @@ When describing variability and correlations of any pattern, we have to consider
 ## Not run:
 #################
 
-# Realisations of the homogeneous Poisson processes
+# Realisation of the homogeneous Poisson processes
 pp <- rpoispp(100)
 plot(pp)
 

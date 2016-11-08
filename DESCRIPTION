@@ -2,10 +2,10 @@ Package: scdcLISA
 Type: Package
 Title: Spatial cluster detection and classification through of the product
     density LISA functions
-Version: 0.1
+Version: 0.1.1
 Nickname: Coffee Aroma
 Date: 2015-10-01
-Author: Francisco J. Rodriguez-Cortes
+Author: Francisco J. Rodriguez-Cortes, Jonatan A. Gonzaleza
 Maintainer: Francisco J. Rodriguez-Cortes <cortesf@uji.es>
 Depends:
     R (>= 3.2.2),

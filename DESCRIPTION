@@ -1,13 +1,24 @@
 Package: scdcLISA
 Type: Package
-Title: Spatial cluster detection and classification through of the product density LISA functions
+Title: Spatial cluster detection and classification through of the product
+    density LISA functions
 Version: 0.1
 Nickname: Coffee Aroma
 Date: 2015-10-01
 Author: Francisco J. Rodriguez-Cortes
 Maintainer: Francisco J. Rodriguez-Cortes <cortesf@uji.es>
-Depends: R (>= 3.2.2), splancs, KernSmooth, spatstat
-Description: Basic toolkit for cluster detection in spatial point patterns through the local versions of the second-order product density function set a powerful tool to address the problem of classification of interesting subpatterns. The LISA functions can then be grouped into bundles of similar functions using multivariate hierarchical clustering techniques according to a particular statistical distances.
+Depends:
+    R (>= 3.2.2),
+    splancs,
+    KernSmooth,
+    spatstat
+Description: Basic toolkit for cluster detection in spatial point patterns
+    through the local versions of the second-order product density function
+    set a powerful tool to address the problem of classification of interesting
+    subpatterns. The LISA functions can then be grouped into bundles of similar
+    functions using multivariate hierarchical clustering techniques according to a
+    particular statistical distances.
 License: GPL-3
 LazyLoad: yes
 NeedsCompilation: yes
+RoxygenNote: 5.0.1

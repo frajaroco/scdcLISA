@@ -44,6 +44,7 @@
 #' ## End(Not run)
 sopdf <- function(xy, s.region, ds, ks="epanech", hs){
   
+
   if (missing(s.region)){
     x <- xy[,1]
     y <- xy[,2]

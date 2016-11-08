@@ -54,7 +54,7 @@ sopdf <- function(xy,s.region,ds,ks="epanech",hs,correction="isotropic"){
   npt <- length(ptsx)
   nds <- length(ds)
   area <- area(bsw)
-  rotheo <- (npt*(npt-1))/area^2
+  rhotheo <- (npt*(npt-1))/area^2
   corepd <- rep(0,nds)
   
   storage.mode(corepd) <- "double"
@@ -74,5 +74,5 @@ sopdf <- function(xy,s.region,ds,ks="epanech",hs,correction="isotropic"){
 		   
   corepd <- sopdke[[11]]
 
-  return(list(sopd=corepd,ds=ds,s.region=s.region,kernel=kernel,rhotheo=rotheo))
+  return(list(sopd=corepd,ds=ds,s.region=s.region,kernel=kernel,rhotheo=rhotheo))
 }

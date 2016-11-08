@@ -5,7 +5,7 @@ Title: Spatial cluster detection and classification through of the product
 Version: 0.1.1
 Nickname: Coffee Aroma
 Date: 2015-10-01
-Author: Francisco J. Rodriguez-Cortes, Jonatan A. Gonzaleza
+Author: Francisco J. Rodriguez-Cortes, Jonatan A. Gonzalez
 Maintainer: Francisco J. Rodriguez-Cortes <cortesf@uji.es>
 Depends:
     R (>= 3.2.2),

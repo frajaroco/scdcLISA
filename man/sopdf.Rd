@@ -16,14 +16,18 @@ sopdf(xy, s.region, ds, ks = "epanech", hs, correction="isotropic")
 \item{ks}{A kernel function for the spatial distances. The default is \code{"epanech"} the Epanechnikov kernel. It can also be \code{"box"}, or \code{"biweight"}.}
 
 \item{hs}{A bandwidth of the kernel function \code{ks}.}
+
+\item{correction}{A character vector specifying the edge-correction(s) to be applied among "isotropic" and "none". The default is "isotropic".}
 }
 \value{
 A list containing:
 \itemize{
   \item \code{sopd}: A vector containing the values of \eqn{\widehat{\rho}^{(2)}(r)} estimated.
   \item \code{ds}: If \code{ds} is missing, a vector of distances \code{u} at which \eqn{\rho^{(2)}(u)} is computed under the restriction \eqn{0<\epsilon<r}.
-  \item \code{kernel}: A vector of names and bandwidth of the spatial kernel.
   \item \code{s.region}: Parameter passed in argument.
+  \item \code{kernel}: A vector of names and bandwidth of the spatial kernel.
+  \item \code{rhotheo}: .
+  
   }
 }
 \description{
@@ -51,12 +55,12 @@ par(mfrow=c(1,1))
 plot(out$ds,out$sopd, type="l", xlab="dist", ylab="Product density", 
 ylim=(c(min(out$sopd,length(xy[,1])*(length(xy[,1])-1)),max(out$sopd,length(xy[,1])*(length(xy[,1])-1)))),
 main="Product density function")
-lines(out$ds,rep(length(xy[,1])*(length(xy[,1])-1),length(out$ds)),col="red")
+lines(out$ds,rep(length(out$rhotheo),length(out$ds)),col="red")
 
 ## End(Not run)
 }
 \author{
-Francisco J. Rodriguez-Cortes <cortesf@uji.es> \url{https://fjrodriguezcortes.wordpress.com}
+Francisco J. Rodriguez-Cortes <cortesf@uji.es> \url{https://fjrodriguezcortes.wordpress.com}, Jonatan A. Gonzaleza <jmonsalv@uji.es>
 }
 \references{
 Baddeley, A. and Turner, J. (2005). \code{spatstat}: An R Package for Analyzing Spatial Point Pattens. Journal of Statistical Software 12, 1-42.

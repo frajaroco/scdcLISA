@@ -4,7 +4,7 @@
 \alias{sopdf}
 \title{Second-order product density function}
 \usage{
-sopdf(xy, s.region, ds, ks = "epanech", hs)
+sopdf(xy, s.region, ds, ks = "epanech", hs, correction="isotropic")
 }
 \arguments{
 \item{xy}{Spatial coordinates \eqn{(x,y)} of the point pattern.}
@@ -27,7 +27,7 @@ A list containing:
   }
 }
 \description{
-Computes an edge-corrected kernel estimator of the second-order product density function.
+Computes an edge-corrected kernel based estimator of the second-order product density function given in Cressie and Collins (2001).
 }
 \details{
 When describing variability and correlations of any pattern, we have to consider pairs of events, and the corresponding characteristics are called second-order measures such as the second-order product density function. The second-order product density function provides a global measure of the covariance structure by summing over the contributions from each event observed in the process and can be used to discriminate amongst several spatial point structures, see e.g. Illian et al. (2008). The second-order product density function is of interest as can be used to discriminate amongst several spatial point structures. For example, for a spatial Poisson process \eqn{\rho^{(2)}(u)=\rho^{2}}. Values of the second-order product density function larger than \eqn{\rho^{2}} indicate that the interpoint distances around \eqn{r} are relatively more frequent compared to those in a spatial Poisson process, which is typical of a spatial cluster process, and conversely, values of \eqn{\rho^{(2)}(u)} smaller than \eqn{\rho^{2}} indicate that the corresponding distances are rare and this is typical of a spatial inhibition process, for more details see Illian et al. (2008).

@@ -1,4 +1,4 @@
-sopdf <- function(xy, s.region, ds, ks="epanech", hs, correction="isotropic"){
+sopdf <- function(xy,s.region,ds,ks="epanech",hs,correction="isotropic"){
   
   correc <- c("none","isotropic")
   id <- match(correction,correc,nomatch=NA)
@@ -21,13 +21,13 @@ sopdf <- function(xy, s.region, ds, ks="epanech", hs, correction="isotropic"){
   ker2[ik] <- 1
   
   if (missing(hs)){
-    d <- dist(xyt[,1:2])
+    d <- dist(xy)
     hs <- dpik(d,kernel=ks,range.x=c(min(d),max(d)))
   }
   
   if (missing(s.region)){
-      x <- xyt[,1]
-      y <- xyt[,2]
+      x <- xy[,1]
+      y <- xy[,2]
       W <- ripras(x,y)
       poly <- W$bdry
       X <- poly[[1]]$x
@@ -48,15 +48,13 @@ sopdf <- function(xy, s.region, ds, ks="epanech", hs, correction="isotropic"){
 
   kernel <- c(ks=ks,hs=hs)
   
-  pts <- xyt[,1:2]
-  xytimes <- xyt[,3]
+  pts <- xy
   ptsx <- pts[,1]
   ptsy <- pts[,2]
-  ptst <- xytimes
   npt <- length(ptsx)
   nds <- length(ds)
   area <- area(bsw)
-  kernel <- c(ks=ks,hs=hs)
+  rotheo <- (npt*(npt-1))/area^2
   corepd <- rep(0,nds)
   
   storage.mode(corepd) <- "double"
@@ -76,5 +74,5 @@ sopdf <- function(xy, s.region, ds, ks="epanech", hs, correction="isotropic"){
 		   
   corepd <- sopdke[[11]]
 
-  return(list(sopd=corepd,ds=ds,s.region=s.region,kernel=kernel))
+  return(list(sopd=corepd,ds=ds,s.region=s.region,kernel=kernel,rhotheo=rotheo))
 }

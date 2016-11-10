@@ -13,8 +13,6 @@
        integer i,j,iu,n,ns,ks,edge
        double precision corepd,hij,wij,s,kerns,d,hs
        dimension d(n,n),s(ns),wrs(n,n),edge(2),ks(3),corepd(ns)
-        
-        corepd=0d0
 
        do iu=1,ns
         do i=1,n 

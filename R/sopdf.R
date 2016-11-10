@@ -58,7 +58,7 @@ sopdf <- function(xy,ds,ks="epanech",hs,correction="isotropic"){
   }
 
   sopdke <- .Fortran("coresopdf",d=as.double(d),npt=as.integer(npt),ds=as.double(ds),nds=as.integer(nds),
-                     ks=as.integer(ker2),hs=as.double(hs),wrs=as.double(wrs),correc2=as.integer(correc2),(corepd))
+                     ker2=as.integer(ker2),hs=as.double(hs),wrs=as.double(wrs),correc2=as.integer(correc2),(corepd))
 		   
   corepd <- sopdke[[9]]/(2*pi*area)
 

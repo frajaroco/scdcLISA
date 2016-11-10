@@ -1,99 +1,75 @@
-#' @title Product density LISA functions
-#' @description Computes an edge-corrected kernel estimator of the product density LISA functions.
-#' @param xy Spatial coordinates \eqn{(x,y)} of the point pattern.
-#' @param s.region A two-column matrix specifying a polygonal region containing all data locations. If \code{s.region} is missing, the Ripley-Rasson estimate convex spatial domain is considered.
-#' @param ds A vector of distances \code{u} at which \eqn{\rho^{(2)i}(u)} is computed.
-#' @param ks A kernel function for the spatial distances. The default is \code{"epanech"} the Epanechnikov kernel. It can also be \code{"box"} kernel, or \code{"biweight"}.
-#' @param hs A bandwidth of the kernel function \code{ks}.
-#' @details An individual product density LISA functions \eqn{\rho^{(2)i}(.)} should reveal the extent of the contribution of the event \eqn{u_i} to the global estimator of the second-order product density \eqn{\rho^{(2)}(.)}, and may provide a further description of structure in the data (e.g., determining events with similar local structure through dissimilarity measures of the individual LISA functions), for more details see Cressie and Collins (2001).
-#' @return A list containing:
-#' \itemize{
-#'   \item \code{lisa}: A matrix containing the values of the estimation of \eqn{\widehat{\rho}^{(2)i}(r)}  for each one of \eqn{n} points of the process by rows.
-#'   \item \code{ds}: If \code{ds} is missing, a vector of distances \code{u} at which \eqn{\rho^{(2)i}(u)} is computed under the restriction \eqn{0<\epsilon<r}.
-#'   \item \code{kernel}: A vector of names and bandwidth of the spatial kernel.
-#'   \item \code{s.region}: Parameter passed in argument.
-#'   }
-#' @author Francisco J. Rodriguez-Cortes <cortesf@@uji.es> \url{https://fjrodriguezcortes.wordpress.com}
-#' @references Baddeley, A. and Turner, J. (2005). \code{spatstat}: An R Package for Analyzing Spatial Point Pattens. Journal of Statistical Software 12, 1-42.
-#' @references Cressie, N. and Collins, L. B. (2001). Analysis of spatial point patterns using bundles of product density LISA functions. Journal of Agricultural, Biological, and Environmental Statistics 6, 118-135.
-#' @references Cressie, N. and Collins, L. B. (2001). Patterns in spatial point locations: Local indicators of spatial association in a minefield with clutter Naval Research Logistics (NRL), John Wiley & Sons, Inc. 48, 333-347.
-#' @references Stoyan, D. and Stoyan, H. (1994). Fractals, random shapes, and point fields: methods of geometrical statistics. Chichester: Wiley.
-#' @examples
-#' ## Not run:
-#' #################
-#'
-#' # Realisations of the homogeneous Poisson processes
-#' pp <- rpoispp(100)
-#' plot(pp)
-#' 
-#' xy <- cbind(pp$x,pp$y)
-#' 
-#' # This function provides an edge-corrected kernel estimator of the porduct density LISA functions.
-#' out <- pdLISA(xy)
-#' out
-#'
-#' # R plot
-#' par(mfrow=c(1,1))
-#' plot(out$ds,out$lisa[1,], type="l", xlab="dist", ylab="LISA",
-#' ylim=(c(min(out$lisa),max(out$lisa))),main="Product density LISA functions")
-#' for (i in 2:length(xy[,1])){lines(out$ds,out$lisa[i,])}
-#' lines(out$ds,rep((length(xy[,1])-2)*(length(xy[,1])-1)+(length(xy[,1])-1),length(out$ds)),col="red")
-#'
-#' ## End(Not run)
-pdLISA <- function(xy, s.region, ds, ks="epanech", hs){
+pdLISA <- function(xy,ds,ks="epanech",hs,correction="isotropic"){
 
-  if (missing(s.region)){
-    x <- xy[,1]
-    y <- xy[,2]
-    W <- ripras(x,y)
-    poly <- W$bdry
-    X <- poly[[1]]$x
-    Y <- poly[[1]]$y
-    s.region <- cbind(X,Y)}
-
+  verifyclass(xy, "ppp")
+  
+  correc <- c("none","isotropic")
+  id <- match(correction,correc,nomatch=NA)
+  if (any(nbg <- is.na(id))){
+    messnbg <- paste("unrecognised correction method:",paste(dQuote(correction[nbg]),collapse=","))
+    stop(messnbg,call.=FALSE)
+  }
+  id <- unique(id)	
+  correc2 <- rep(0,2)
+  correc2[id] <- 1	
+  
+  ker <- c("box","epanech","biweight")
+  ik <- match(ks,ker,nomatch=NA)
+  if (any(nbk <- is.na(ik))){
+    messnbk <- paste("unrecognised kernel function:",paste(dQuote(ks[nbk]),collapse=","))
+    stop(messnbk,call.=FALSE)
+  }
+  ik <- unique(ik)
+  ker2 <- rep(0,3)
+  ker2[ik] <- 1
+  
+  d <- pairdist(xy)
+  
   if (missing(hs)){
-    d <- dist(xy)
-    hs <- dpik(d,kernel=ks,range.x=c(min(d),max(d)))}
-
-  bdry <- owin(poly=list(x=s.region[,1],y=s.region[,2]))
-
+    hs <- dpik(as.dist(d),kernel=ks,range.x=c(min(d),max(d)))
+  }
+  
+  bsw <- xy$window
+  
   if (missing(ds)){
-    rect <- as.rectangle(bdry)
+    rect <- as.rectangle(bsw)
     maxd <- min(diff(rect$xrange),diff(rect$yrange))/4
-    ds <- seq(hs*1.01, maxd, len=50)}
-
-  ds <- sort(ds)
-  if(ds[1]==0) {
-    ds<- ds[-1]}
-
-  pts <- xy
-  ptsx <- pts[,1]
-  ptsy <- pts[,2]
-  npt <- length(ptsx)
-  nds <- length(ds)
-  area <- areapl(s.region)
-
+    ds <- seq(hs,maxd,len=51)[-1]
+    ds <- sort(ds)
+  }
+  if(ds[1]==0){
+    ds <- ds[-1]
+  }
+  
   kernel <- c(ks=ks,hs=hs)
-
-  if (ks=="box"){ ks=1}
-  else if (ks=="epanech"){ ks=2}
-  else if (ks=="biweight"){ ks=3}
-
-  pppxy <- ppp(x=ptsx,y=ptsy,window=bdry)
-
-  wrs <- edge.Ripley(pppxy,pairdist(pts))
-  lisas <- NULL
-
-	for (i in 1:npt){
-
-	  lisa <- rep(0,nds)
-    storage.mode(lisa) <- "double"
-	  xf <- ptsx[i]
-  	yf <- ptsy[i]
-
- lisai <- .Fortran("corelisa",ptsx=as.double(ptsx),ptsy=as.double(ptsy),npt=as.integer(npt),ds=as.double(ds),nds=as.integer(nds),as.integer(ks),delta=as.double(hs),xf=as.double(xf),yf=as.double(yf),areap=as.double(area),i=as.integer(i),as.double(wrs),(lisa))
- lisas <- rbind(lisas,lisai[[13]])}
-
-return(list(lisa=lisas,ds=ds,s.region=s.region,kernel=kernel))
+  
+  npt <- xy$n
+  il <- seq(1,npt)
+  nds <- length(ds)
+  area <- area(bsw)
+  rhotheo <- ((((npt-2)*(npt-1))/area^2)^2)+((npt-1)/area^2)
+  
+  wrs <- array(0,dim=c(npt,npt))
+  
+  if(correction=="isotropic"){
+    wisot <- edge.Ripley(xy,d)
+    wrs <- 1/wisot
+  }
+  
+  lisa.s <- sapply(il, function(il) i.lisa(il,d,npt,ds,nds,ker2,hs,wrs,correc2,area),simplify="array")
+  
+  return(list(lisa=lisa.s,ds=ds,kernel=kernel,rhotheo=rhotheo))
 }
 
+i.lisa <- function(il,d,npt,ds,nds,ker2,hs,wrs,correc2,area){
+  
+	lisa <- rep(0,nds)
+	
+  storage.mode(lisa) <- "double"
+
+ lisai <- .Fortran("corelisa",il=as.integer(il),d=as.double(d),npt=as.integer(npt),ds=as.double(ds),nds=as.integer(nds),
+                   ker2=as.integer(ker2),hs=as.double(hs),wrs=as.double(wrs),correc2=as.integer(correc2),(lisa))
+ 
+ lisas <- lisai[[10]]/(2*pi*area)
+ 
+ return(lisas)
+}

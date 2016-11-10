@@ -1,38 +1,41 @@
 !
-!     Francisco J. Rodriguez-Cortes, November 2015
+!     Francisco J. Rodriguez-Cortes, November 2016 
 !
-!     This function provides an edge-corrected kernel
-!     estimator of the secon-order product density LISA function.
+!     This function provides an edge-corrected kernel based estimator 
+!     of the spatial second-order product density LISA functions given
+!     in Cressie and Collins (2001).
 !
 
-       subroutine corelisa(x,y,n,s,ns,ks,hs,xi,yi,area,i,wrs,lisa)
+       subroutine corelisa(i,d,n,s,ns,ks,hs,wrs,edge,lisa)
 
        implicit real*8(a-h,o-z)
 
-       integer i,j,iu,n,ks,ns
-       real*8 kernes,x,y,s,hs,xj,yj,xi,yi,hij,wij,wrs,area,lisa
-       dimension x(n),y(n),s(ns),wrs(n,n),lisa(ns)
-
-       two=2d0
-       pi=3.141592654d0
+       integer i,j,iu,n,ks,ns,edge
+       double precision kerns,s,hs,hij,wij,wrs,d,lisa
+       dimension d(n,n),s(ns),wrs(n,n),lisa(ns),edge(2),ks(3)
 
        do iu=1,ns
-        lisa(iu)=0d0
         do j=1,n
-         xj=x(j)
-         yj=y(j)
           if (j.ne.i) then
-           hij=sqrt((xi-xj)**two+(yi-yj)**two)
-            if (ks.eq.1) then
-             kerns=boxkernel((s(iu)-hij)/hs,hs)
-              else if (ks.eq.2) then
-               kerns=ekernel((s(iu)-hij)/hs,hs)
-                else if (ks.eq.3) then
-                 kerns=qkernel((s(iu)-hij)/hs,hs)
-            end if
-             if (kerns.ne.0d0) then
-              wij=((n-1)*kerns*wrs(i,j))/(area*two*pi*s(iu))
-              lisa(iu)=lisa(iu)+wij
+           hij=d(i,j)
+           if (ks(1).eq.1) then
+               kerns=boxkernel((s(iu)-hij)/hs,hs)
+                else if (ks(2).eq.1) then
+                 kerns=ekernel((s(iu)-hij)/hs,hs)
+                  else if (ks(3).eq.1) then
+                   kerns=qkernel((s(iu)-hij)/hs,hs)
+              end if
+            if (kerns.ne.0d0) then
+!     none   
+              if (edge(1).eq.1) then
+                 wij=kerns/s(iu)
+                 lisa(iu)=lisa(iu)+wij 
+              end if                         
+!    isotropic
+              if (edge(2).eq.1) then                  
+                 wij=(kerns*wrs(i,j))/s(iu)
+                 lisa(iu)=lisa(iu)+wij
+              end if
             end if
           end if
         end do

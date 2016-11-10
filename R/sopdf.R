@@ -1,4 +1,6 @@
-sopdf <- function(xy,s.region,ds,ks="epanech",hs,correction="isotropic"){
+sopdf <- function(xy,ds,ks="epanechnikov",hs,correction="isotropic"){
+  
+  verifyclass(xy, "ppp")
   
   correc <- c("none","isotropic")
   id <- match(correction,correc,nomatch=NA)
@@ -10,7 +12,7 @@ sopdf <- function(xy,s.region,ds,ks="epanech",hs,correction="isotropic"){
   correc2 <- rep(0,2)
   correc2[id] <- 1	
 
-  ker <- c("box","epanech","biweight")
+  ker <- c("rectangular","epanechnikov","biweight","gaussian")
   ik <- match(ks,ker,nomatch=NA)
   if (any(nbk <- is.na(ik))){
     messnbk <- paste("unrecognised kernel function:",paste(dQuote(ks[nbk]),collapse=","))
@@ -20,38 +22,33 @@ sopdf <- function(xy,s.region,ds,ks="epanech",hs,correction="isotropic"){
   ker2 <- rep(0,3)
   ker2[ik] <- 1
   
+  d <- pairdist(xy)
+  
   if (missing(hs)){
-    d <- dist(xy)
-    hs <- dpik(d,kernel=ks,range.x=c(min(d),max(d)))
+   if (ks=="rectangular"){
+    ks <- "box"
+   } else if (ks=="epanechnikov"){
+    ks <- "epanech"
+  } else if (ks=="gaussian"){
+     ks <- "normal"}
+     hs <- dpik(as.dist(d),kernel=ks,range.x=c(min(d),max(d)))
   }
   
-  if (missing(s.region)){
-      x <- xy[,1]
-      y <- xy[,2]
-      W <- ripras(x,y)
-      poly <- W$bdry
-      X <- poly[[1]]$x
-      Y <- poly[[1]]$y
-      s.region <- cbind(X,Y)
-  }
-  
-  bsw <- owin(poly=list(x=s.region[,1],y=s.region[,2]))
+  bsw <- xy$window
   
   if (missing(ds)){
     rect <- as.rectangle(bsw)
     maxd <- min(diff(rect$xrange),diff(rect$yrange))/4
-    ds <- seq(hs*1.01, maxd, len=20)
+    ds <- seq(hs,maxd,len=51)[-1]
     ds <- sort(ds)
   }
-  if(ds[1]==0){ds <- ds[-1]
+  if(ds[1]==0){
+    ds <- ds[-1]
   }
 
   kernel <- c(ks=ks,hs=hs)
   
-  pts <- xy
-  ptsx <- pts[,1]
-  ptsy <- pts[,2]
-  npt <- length(ptsx)
+  npt <- xy$n
   nds <- length(ds)
   area <- area(bsw)
   rhotheo <- (npt*(npt-1))/area^2
@@ -61,18 +58,15 @@ sopdf <- function(xy,s.region,ds,ks="epanech",hs,correction="isotropic"){
   
   wrs <- array(0,dim=c(npt,npt))
   
-  pxy <- ppp(x=ptsx,y=ptsy,window=bsw)  
-  
   if(correction=="isotropic"){
-    wisot <- edge.Ripley(pxy,pairdist(pts))
+    wisot <- edge.Ripley(xy,d)
     wrs <- 1/wisot
   }
 
-  sopdke <- .Fortran("coresopdf",ptsx=as.double(ptsx),ptsy=as.double(ptsy),npt=as.integer(npt),
-                     ds=as.double(ds),nds=as.integer(nds),ker2=as.integer(ker2),hs=as.double(hs),
-                     area=as.double(area),wrs=as.double(wrs),correc2=as.integer(correc2),(corepd))
+  sopdke <- .Fortran("coresopdf",d=as.double(d),npt=as.integer(npt),ds=as.double(ds),nds=as.integer(nds),
+                     ks=as.integer(ker2),hs=as.double(hs),wrs=as.double(wrs),correc2=as.integer(correc2),(corepd))
 		   
-  corepd <- sopdke[[11]]
+  corepd <- sopdke[[9]]/(2*pi*area)
 
-  return(list(sopd=corepd,ds=ds,s.region=s.region,kernel=kernel,rhotheo=rhotheo))
+  return(list(sopd=corepd,ds=ds,kernel=kernel,rhotheo=rhotheo))
 }

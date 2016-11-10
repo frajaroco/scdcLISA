@@ -1,4 +1,4 @@
-sopdf <- function(xy,ds,ks="epanechnikov",hs,correction="isotropic"){
+sopdf <- function(xy,ds,ks="epanech",hs,correction="isotropic"){
   
   verifyclass(xy, "ppp")
   
@@ -12,7 +12,7 @@ sopdf <- function(xy,ds,ks="epanechnikov",hs,correction="isotropic"){
   correc2 <- rep(0,2)
   correc2[id] <- 1	
 
-  ker <- c("rectangular","epanechnikov","biweight","gaussian")
+  ker <- c("box","epanech","biweight")
   ik <- match(ks,ker,nomatch=NA)
   if (any(nbk <- is.na(ik))){
     messnbk <- paste("unrecognised kernel function:",paste(dQuote(ks[nbk]),collapse=","))
@@ -25,12 +25,6 @@ sopdf <- function(xy,ds,ks="epanechnikov",hs,correction="isotropic"){
   d <- pairdist(xy)
   
   if (missing(hs)){
-   if (ks=="rectangular"){
-    ks <- "box"
-   } else if (ks=="epanechnikov"){
-    ks <- "epanech"
-  } else if (ks=="gaussian"){
-     ks <- "normal"}
      hs <- dpik(as.dist(d),kernel=ks,range.x=c(min(d),max(d)))
   }
   

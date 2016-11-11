@@ -72,5 +72,5 @@ i.lisa <- function(il,d,npt,ds,nds,ker2,hs,wrs,correc2,area){
  
  lisas <- ((npt-1)*lisai[[10]])/(2*pi*area)
  
- return(lisas)
+ return(lisas=lisas)
 }

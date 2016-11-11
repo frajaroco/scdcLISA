@@ -36,7 +36,7 @@ coh.mdlisa <- function(xy,ds,ks="epanech",hs,correction="isotropic"){
   
   ls <- pdLISA(xy,ds,ks,hs,correction)
 
-  pex.vspec <- mvspec(ls$lisa,plot=TRUE,taper=.1,log="no",kernel("daniell")) 
+  pex.vspec <- mvspec(ls$lisa,plot=FALSE,taper=.1,log="no",kernel("daniell")) 
   
   coh <- pex.vspec$coh
   freq <- pex.vspec$freq
@@ -45,7 +45,7 @@ coh.mdlisa <- function(xy,ds,ks="epanech",hs,correction="isotropic"){
   out.mat <- matrix(0,ncol(lisa),ncol(lisa))
   
   for(i in 1:(ncol(lisa)-1)){
-    k=i+1
+   k=i+1
     for(j in k:ncol(lisa)){
       out.mat[i,j] <- 1-(sqrt((1/(2*pi))*sum(coh[,i+(j-1)*(j-2)/2])*diff(freq)[1]))
     }

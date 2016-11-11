@@ -4,7 +4,7 @@ Title: Spatial cluster detection and classification through product density LISA
 Version: 0.1.1
 Nickname: Coffee Aroma
 Date: 2015-10-01
-Author: Francisco J. Rodriguez-Cortes, Jonatan A. Gonzalez
+Author: Francisco J. Rodriguez-Cortes and Jonatan A. Gonzalez
 Maintainer: Francisco J. Rodriguez-Cortes <cortesf@uji.es>
 Depends:
     R (>= 3.2.2),
@@ -12,12 +12,7 @@ Depends:
     KernSmooth,
     spatstat,
     astsa
-Description: Basic toolkit for cluster detection in spatial point patterns
-    through the local versions of the second-order product density function
-    set a powerful tool to address the problem of classification of interesting
-    subpatterns. The LISA functions can then be grouped into bundles of similar
-    functions using multivariate hierarchical clustering techniques according to a
-    particular statistical distances.
+Description: Basic toolkit for cluster detection in spatial point patterns through local versions of the second-order product density function wich seting a powerful tool to address the problem of classification. The LISA functions can then be grouped into bundles of similar local behaviour using multivariate hierarchical clustering techniques according to a particular statistical distances.
 License: GPL-3
 LazyLoad: yes
 NeedsCompilation: yes

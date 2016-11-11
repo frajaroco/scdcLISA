@@ -8,7 +8,7 @@ This repository is based on `spatstat`, `KernSmooth` and `astsa` packages.
 
 The easiest way to install the development version of scdcLISA from github is using the devtools package which can be installed run the next command:
 ```
-install.packages('devtools', dependencies=TRUE)
+install.packages('devtools',dependencies=TRUE)
 ```
 and thereafter run the commands:
 ```

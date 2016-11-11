@@ -46,7 +46,7 @@ pdLISA <- function(xy,ds,ks="epanech",hs,correction="isotropic"){
   il <- seq(1,npt)
   nds <- length(ds)
   area <- area(bsw)
-  rhotheo <- ((((npt-2)*(npt-1))/area^2)^2)+((npt-1)/area^2)
+  rhotheo <- (((npt-2)*(npt-1))/area^2)+((npt-1)/area^2)
   
   wrs <- array(0,dim=c(npt,npt))
   
@@ -67,9 +67,10 @@ i.lisa <- function(il,d,npt,ds,nds,ker2,hs,wrs,correc2,area){
   storage.mode(lisa) <- "double"
 
  lisai <- .Fortran("corelisa",il=as.integer(il),d=as.double(d),npt=as.integer(npt),ds=as.double(ds),nds=as.integer(nds),
-                   ker2=as.integer(ker2),hs=as.double(hs),wrs=as.double(wrs),correc2=as.integer(correc2),(lisa))
+                   ker2=as.integer(ker2),hs=as.double(hs),wrs=as.double(wrs),correc2=as.integer(correc2),(lisa)
+                   ,PACKAGE="scdcLISA")
  
- lisas <- lisai[[10]]/(2*pi*area)
+ lisas <- ((npt-1)*lisai[[10]])/(2*pi*area)
  
  return(lisas)
 }

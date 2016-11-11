@@ -1,7 +1,6 @@
 Package: scdcLISA
 Type: Package
-Title: Spatial cluster detection and classification through of the product
-    density LISA functions
+Title: Spatial cluster detection and classification through product density LISA functions
 Version: 0.1.1
 Nickname: Coffee Aroma
 Date: 2015-10-01
@@ -11,7 +10,8 @@ Depends:
     R (>= 3.2.2),
     splancs,
     KernSmooth,
-    spatstat
+    spatstat,
+    astsa
 Description: Basic toolkit for cluster detection in spatial point patterns
     through the local versions of the second-order product density function
     set a powerful tool to address the problem of classification of interesting

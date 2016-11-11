@@ -2,7 +2,7 @@
 
 Description...
 
-This repository is based on `spatstat` and `KernSmooth` packages.
+This repository is based on `spatstat`, `KernSmooth` and `astsa` packages.
 
 ## Installation guide
 

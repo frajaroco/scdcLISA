@@ -1,8 +1,8 @@
 useDynLib(scdcLISA)
-exportPattern("^[[:alpha:]]+")
+exportPattern("^[^\\.]")
 
+import(astsa)
 import(spatstat)
 import(KernSmooth)
-import(astsa)
 importFrom("graphics","plot","text")
 importFrom("stats","as.dist")

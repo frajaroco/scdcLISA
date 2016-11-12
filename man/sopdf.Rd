@@ -2,33 +2,29 @@
 \alias{sopdf}
 \title{Second-order product density function}
 \usage{
-sopdf(xy, s.region, ds, ks = "epanech", hs, correction="isotropic")
+sopdf(xy, ds, ks = "epanech", hs, correction="isotropic")
 }
 \arguments{
-\item{xy}{Spatial coordinates \eqn{(x,y)} of the point pattern.}
-
-\item{s.region}{A two-column matrix specifying a polygonal region containing all data locations. If \code{s.region} is missing, the Ripley-Rasson estimate convex spatial domain is considered.}
-
+\item{xy}{Spatial coordinates \eqn{(x,y)} as objects of class 'ppp' to represent a two-dimensional point pattern. Includes information about the window in which the pattern was observed.}
 \item{ds}{A vector of distances \code{u} at which \eqn{\rho^{(2)}(u)} is computed.}
-\item{ks}{A kernel function for the spatial distances. The default is \code{"epanech"} the Epanechnikov kernel. It can also be \code{"box"}, or \code{"biweight"}.}
+\item{ks}{A kernel function for the spatial distances. The default is \code{"epanech"} the Epanechnikov kernel. It can also be \code{"box"} or \code{"biweight"}.}
 \item{hs}{A bandwidth of the kernel function \code{ks}.}
 \item{correction}{A character vector specifying the edge-correction(s) to be applied among "isotropic" and "none". The default is "isotropic".}
 }
 \value{
 A list containing:
 \itemize{
-\item \code{sopd}: A vector containing the values of \eqn{\widehat{\rho}^{(2)}(r)} estimated.
+\item \code{sopd}: A vector containing the values of \eqn{\rho^{(2)}(u)} estimated.
 \item \code{ds}: If \code{ds} is missing, a vector of distances \code{u} at which \eqn{\rho^{(2)}(u)} is computed under the restriction \eqn{0<\epsilon<r}.
-\item \code{s.region}: Parameter passed in argument.
 \item \code{kernel}: A vector of names and bandwidth of the spatial kernel.
-\item \code{rhotheo}: .
+\item \code{rhotheo}: Theoretical value under a Poisson point processes model.
 }
 }
 \description{
 Computes an edge-corrected kernel based estimator of the second-order product density function given in Cressie and Collins (2001).
 }
 \details{
-When describing variability and correlations of any pattern, we have to consider pairs of events, and the corresponding characteristics are called second-order measures such as the second-order product density function. The second-order product density function provides a global measure of the covariance structure by summing over the contributions from each event observed in the process and can be used to discriminate amongst several spatial point structures, see e.g. Illian et al. (2008). The second-order product density function is of interest as can be used to discriminate amongst several spatial point structures. For example, for a spatial Poisson process \eqn{\rho^{(2)}(u)=\rho^{2}}. Values of the second-order product density function larger than \eqn{\rho^{2}} indicate that the interpoint distances around \eqn{r} are relatively more frequent compared to those in a spatial Poisson process, which is typical of a spatial cluster process, and conversely, values of \eqn{\rho^{(2)}(u)} smaller than \eqn{\rho^{2}} indicate that the corresponding distances are rare and this is typical of a spatial inhibition process, for more details see Illian et al. (2008).
+For more details see Illian et al. (2008) and Baddeley et al. (2015).
 }
 \examples{
 ## Not run:
@@ -38,26 +34,30 @@ When describing variability and correlations of any pattern, we have to consider
 pp <- rpoispp(100)
 plot(pp)
 
-xy <- cbind(pp$x,pp$y)
+# Stoyan rule for Epanechnikov kernel bandwidth 
+bw <- 0.15/sqrt(100)
 
 # This function provides an edge-corrected kernel estimator of the product density LISA functions.
-out <- sopdf(xy)
+out <- sopdf(pp,hs=bw)
 out
 
 # R plot
 par(mfrow=c(1,1))
-plot(out$ds,out$sopd, type="l", xlab="dist", ylab="Product density", 
-ylim=(c(min(out$sopd,length(xy[,1])*(length(xy[,1])-1)),max(out$sopd,length(xy[,1])*(length(xy[,1])-1)))),
+plot(out$ds,out$sopd,type="l",xlab="r = distance",ylab="Product density",
+ylim=c(min(out$sopd,out$rhotheo),max(out$sopd,out$rhotheo)),
 main="Product density function")
-lines(out$ds,rep(length(out$rhotheo),length(out$ds)),col="red")
+lines(out$ds,rep(out$rhotheo,length(out$ds)),col="red")
 
 ## End(Not run)
 }
 \author{
-Francisco J. Rodriguez-Cortes <cortesf@uji.es> \url{https://fjrodriguezcortes.wordpress.com}, Jonatan A. Gonzaleza <jmonsalv@uji.es>
+Francisco J. Rodriguez-Cortes <cortesf@uji.es> \url{https://fjrodriguezcortes.wordpress.com} and Jonatan A. Gonzaleza <jmonsalv@uji.es>
 }
 \references{
 Baddeley, A. and Turner, J. (2005). \code{spatstat}: An R Package for Analyzing Spatial Point Pattens. Journal of Statistical Software 12, 1-42.
+
+Baddeley, A., Rubak, E. and Turner, R. (2015). Spatial Point Patterns: Methodology and Applications with R. In: Chapman & Hall
+Interdisciplinary Statistics Series, CRC Press, Boca Raton, Florida.
 
 Cressie, N. and Collins, L. B. (2001). Analysis of spatial point patterns using bundles of product density LISA functions. Journal of Agricultural, Biological, and Environmental Statistics 6, 118-135.
 

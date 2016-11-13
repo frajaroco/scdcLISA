@@ -12,7 +12,7 @@ plot.numbers(xy, ...)
 Deatails
 }
 \value{
-\item{Invisible} object of class "symbolmap" giving the correspondence between labeled points and plotting characters.}
+\item{Invisible} {object of class "symbolmap" giving the correspondence between labeled points and plotting characters.}
 }
 \description{
 Draws a text label at a given x and y coordinate into a spatial point pattern.

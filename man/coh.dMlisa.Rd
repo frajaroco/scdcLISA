@@ -7,7 +7,6 @@
 \usage{
 coh.dMlisa(xy, ds, ks = "epanech", hs, correction = "isotropic", plot = FALSE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{xy}{Spatial coordinates \eqn{(x,y)} as objects of class 'ppp' to represent a two-dimensional point pattern. Includes information about the window in which the pattern was observed.}
 \item{ds}{A vector of distances \code{u} at which \eqn{\rho^{(2)}(u)} is computed.}
@@ -17,15 +16,14 @@ coh.dMlisa(xy, ds, ks = "epanech", hs, correction = "isotropic", plot = FALSE)
 \item{plot}{Plot the periodogram. The default is FALSE.}
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Deatails
 }
 \value{
-\item{cohdist}{Description of 'comp1'}
-\item{freq}{Description of 'comp2'}
-\item{coh}{}
+\item{cohdist}{Estimated distance-based matrix on coherence between LISA functions}
+\item{freq}{Vector of frequencies at which the spectral density is estimated}
+\item{coh}{A matrix containing the squared coherency between different series. Column i + (j - 1) * (j - 2)/2 of coh contains the squared coherency between columns i and j of x, where i < j.}
 }
 \references{
-%% ~put references to the literature/web site here ~
 Baddeley, A. and Turner, J. (2005). \code{spatstat}: An R Package for Analyzing Spatial Point Pattens. Journal of Statistical Software 12, 1-42.
 
 Baddeley, A., Rubak, E. and Turner, R. (2015). Spatial Point Patterns: Methodology and Applications with R. In: Chapman & Hall
@@ -40,16 +38,16 @@ Innocenti, G., and Materassi, D. (2008). A modeling approach to multivariate ana
 Stoyan, D. and Stoyan, H. (1994). Fractals, random shapes, and point fields: methods of geometrical statistics. Chichester: Wiley.
 }
 \author{Francisco J. Rodriguez-Cortes <cortesf@uji.es> \url{https://fjrodriguezcortes.wordpress.com} and Jonatan A. Gonzaleza <jmonsalv@uji.es>
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
+}}
 \examples{
+
+# Not run:
+#################
+
+# Realisations of the homogeneous Poisson processes
+pp <- rpoispp(100)
+plot(pp)
+
+# Stoyan rule for Epanechnikov kernel bandwidth 
+bw <- 0.15/sqrt(100)
 }

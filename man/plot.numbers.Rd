@@ -18,14 +18,14 @@ plot.numbers(xy, ...)
 If necessary, more details than the description above
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+\item{Invisible} {object of class "symbolmap" giving the correspondence between labeled points and plotting characters.}
+}
 }
 \references{
-%% ~put references to the literature/web site here ~
+Baddeley, A. and Turner, J. (2005). \code{spatstat}: An R Package for Analyzing Spatial Point Pattens. Journal of Statistical Software 12, 1-42.
+
+Baddeley, A., Rubak, E. and Turner, R. (2015). Spatial Point Patterns: Methodology and Applications with R. In: Chapman & Hall
+Interdisciplinary Statistics Series, CRC Press, Boca Raton, Florida.
 }
 \author{
 Jonatan A. Gonzaleza <jmonsalv@uji.es> and Francisco J. Rodriguez-Cortes <cortesf@uji.es> \url{https://fjrodriguezcortes.wordpress.com}

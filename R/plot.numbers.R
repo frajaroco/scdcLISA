@@ -1,8 +1,8 @@
-plot.numbers <- function(xy, ...){
+plot.numbers <- function(xy,...){
  
-  verifyclass(xy, "ppp")
+  verifyclass(xy,"ppp")
   
   marks(xy) <- 1:xy$n
-  plot(xy, type='n', use.marks=FALSE, ...)
-  text(xy$x, xy$y, label=xy$marks)
+  plot(xy,type='n',use.marks=FALSE,...)
+  text(xy$x,xy$y,label=xy$marks)
 }

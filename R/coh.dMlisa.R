@@ -1,4 +1,4 @@
-coh.mdlisa <- function(xy,ds,ks="epanech",hs,correction="isotropic",plot=FALSE){
+coh.dMlisa <- function(xy,ds,ks="epanech",hs,correction="isotropic",plot=FALSE){
 
   verifyclass(xy, "ppp")
   

@@ -37,8 +37,7 @@ Innocenti, G., and Materassi, D. (2008). A modeling approach to multivariate ana
 
 Stoyan, D. and Stoyan, H. (1994). Fractals, random shapes, and point fields: methods of geometrical statistics. Chichester: Wiley.
 }
-\author{Francisco J. Rodriguez-Cortes <cortesf@uji.es> \url{https://fjrodriguezcortes.wordpress.com} and Jonatan A. Gonzaleza <jmonsalv@uji.es>
-}}
+\author{Francisco J. Rodriguez-Cortes <cortesf@uji.es> \url{https://fjrodriguezcortes.wordpress.com} and Jonatan A. Gonzaleza <jmonsalv@uji.es>}
 \examples{
 
 # Not run:

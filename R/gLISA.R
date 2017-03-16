@@ -50,7 +50,7 @@ gLISA <- function(xy,ds,ks="epanech",hs,lambda,correction="isotropic"){
   
   if(missing(lambda)){
     misl <- 1
-    lambda <- rep(npt/area,npt)
+    lambda <- rep((npt-1)/area,npt)
   } else {
     misl <- 0
     if (length(lambda)==1){
@@ -65,22 +65,22 @@ gLISA <- function(xy,ds,ks="epanech",hs,lambda,correction="isotropic"){
     wrs <- 1/wisot
   }
   
-  lisa.s <- sapply(il, function(il) i.lisa(il,d,npt,ds,nds,ker2,hs,wrs,correc2,area),simplify="array")
+  lisa.g <- sapply(il, function(il) i.glisa(il,d,npt,ds,nds,ker2,hs,lambda,wrs,correc2,area),simplify="array")
   
-  return(list(lisa=lisa.s,ds=ds,kernel=kernel,rhotheo=rhotheo))
+  return(list(lisa.g=lisa.g,ds=ds,kernel=kernel,rhotheo=rhotheo))
 }
 
-i.lisa <- function(il,d,npt,ds,nds,ker2,hs,wrs,correc2,area){
+i.glisa <- function(il,d,npt,ds,nds,ker2,hs,lambda,wrs,correc2,area){
   
-	lisa <- rep(0,nds)
+	glisa <- rep(0,nds)
 	
-  storage.mode(lisa) <- "double"
+  storage.mode(glisa) <- "double"
 
- lisai <- .Fortran("corelisa",il=as.integer(il),d=as.double(d),npt=as.integer(npt),ds=as.double(ds),nds=as.integer(nds),
-                   ker2=as.integer(ker2),hs=as.double(hs),wrs=as.double(wrs),correc2=as.integer(correc2),(lisa)
-                   ,PACKAGE="scdcLISA")
+ glisai <- .Fortran("coreglisa",il=as.integer(il),d=as.double(d),npt=as.integer(npt),ds=as.double(ds),nds=as.integer(nds),
+                   ker2=as.integer(ker2),hs=as.double(hs),lambda=as.double(lambda),wrs=as.double(wrs),correc2=as.integer(correc2),
+                   (glisa),PACKAGE="scdcLISA")
  
- lisas <- ((npt-1)*lisai[[10]])/(2*pi*area)
+ glisas <- ((npt-1)*glisai[[11]])/(2*pi*area)
  
- return(lisas=lisas)
+ return(glisas=glisas)
 }

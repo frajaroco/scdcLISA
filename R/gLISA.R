@@ -1,4 +1,4 @@
-gLISA <- function(xy,ds,ks="epanech",hs,correction="isotropic"){
+gLISA <- function(xy,ds,ks="epanech",hs,lambda,correction="isotropic"){
 
   verifyclass(xy, "ppp")
   
@@ -46,8 +46,18 @@ gLISA <- function(xy,ds,ks="epanech",hs,correction="isotropic"){
   il <- seq(1,npt)
   nds <- length(ds)
   area <- area(bsw)
-  rhotheo <- (((npt-2)*(npt-1))/area^2)+((npt-1)/area^2)
+  rhotheo <- 1+(1/(npt-1))
   
+  if(missing(lambda)){
+    misl <- 1
+    lambda <- rep(npt/area,npt)
+  } else {
+    misl <- 0
+    if (length(lambda)==1){
+      lambda <- rep(lambda,npt)
+    }
+  }
+
   wrs <- array(0,dim=c(npt,npt))
   
   if(correction=="isotropic"){

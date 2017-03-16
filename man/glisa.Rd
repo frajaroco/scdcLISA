@@ -46,7 +46,10 @@ out
 
 # R plot
 par(mfrow=c(1,1))
-plot(out$ds,out$lisa.g[,1],type="l",xlab="r = distance", ylab="LISA",ylim=c(min(out$lisa.g,out$rhotheo),max(out$lisa.g,out$rhotheo)),main="Pair correlation LISA functions")
+plot(out$ds,out$lisa.g[,1],type="l",xlab="r = distance", 
+ylab="LISA",ylim=c(min(out$lisa.g,out$rhotheo),
+max(out$lisa.g,out$rhotheo)),
+main="Pair correlation LISA functions")
 for (i in 2:pp$n) {lines(out$ds,out$lisa.g[,i])}
 lines(out$ds,rep(out$rhotheo,length(out$ds)),col="red")
 

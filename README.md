@@ -1,6 +1,6 @@
 # scdcLISA: Sptial cluster detection and classification through LISA functions
 
-Basic toolkit for cluster detection in spatial point patterns through local versions of the second-order product density function wich seting a powerful tool to address the problem of classification. 
+Basic toolkit for cluster detection in spatial point patterns through local versions of the second-order characteristics which setting a powerful tool to address the problem of classification. 
 
 This repository is based on `spatstat`, `KernSmooth` and `astsa` packages.
 

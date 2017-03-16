@@ -12,7 +12,7 @@ Depends:
     KernSmooth,
     spatstat,
     astsa
-Description: Basic toolkit for cluster detection in spatial point patterns through local versions of the second-order product density function wich seting a powerful tool to address the problem of classification. The LISA functions can then be grouped into bundles of similar local behaviour using multivariate hierarchical clustering techniques according to a particular statistical distances.
+Description: Basic toolkit for cluster detection in spatial point patterns through local versions of the second-order characteristics wich seting a powerful tool to address the problem of classification. The LISA functions can then be grouped into bundles of similar local behaviour using multivariate hierarchical clustering techniques according to a particular statistical distances.
 License: GPL-3
 LazyLoad: yes
 NeedsCompilation: yes

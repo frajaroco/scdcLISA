@@ -67,7 +67,7 @@ gLISA <- function(xy,ds,ks="epanech",hs,lambda,correction="isotropic"){
   
   lisa.g <- sapply(il, function(il) i.glisa(il,d,npt,ds,nds,ker2,hs,lambda,wrs,correc2,area),simplify="array")
   
-  return(list(lisa.g=lisa.g,ds=ds,kernel=kernel,rhotheo=rhotheo))
+  return(list(lisa.g=lisa.g,ds=ds,kernel=kernel,lambda=lambda,rhotheo=rhotheo))
 }
 
 i.glisa <- function(il,d,npt,ds,nds,ker2,hs,lambda,wrs,correc2,area){

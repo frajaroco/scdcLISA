@@ -16,4 +16,4 @@ Description: Basic toolkit for cluster detection in spatial point patterns throu
 License: GPL-3
 LazyLoad: yes
 NeedsCompilation: yes
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

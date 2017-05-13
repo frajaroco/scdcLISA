@@ -5,3 +5,4 @@ import(spatstat)
 
 importFrom("graphics", "lines", "par", "plot", "text")
 importFrom("stats", "as.dist", "kernel")
+importFrom("utils", "capture.output")

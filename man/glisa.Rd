@@ -1,5 +1,5 @@
-\name{glisa}
-\alias{glisa}
+\name{gLISA}
+\alias{gLISA}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Pair correlaton LISA functions}
 \usage{

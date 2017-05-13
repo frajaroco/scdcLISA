@@ -37,11 +37,8 @@ For more details see Stoyan and Stoyan (1994), Cressie and Collins (2001) and Ba
 pp <- rpoispp(100)
 plot(pp)
 
-# Stoyan rule for Epanechnikov kernel bandwidth 
-bw <- 0.15/sqrt(100)
-
-# This function provides an edge-corrected kernel estimator of the porduct density LISA functions.
-out <- gLISA(pp,hs=bw)
+# This function provides an edge-corrected kernel estimator of the pair correlation LISA functions.
+out <- gLISA(pp)
 out
 
 # R plot

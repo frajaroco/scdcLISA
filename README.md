@@ -2,7 +2,7 @@
 
 Basic toolkit for cluster detection in spatial point patterns through local versions of the second-order characteristics which setting a powerful tool to address the problem of classification. 
 
-This repository is based on `spatstat`, `KernSmooth` and `astsa` packages.
+This repository is based on `spatstat` package.
 
 ## Installation guide
 

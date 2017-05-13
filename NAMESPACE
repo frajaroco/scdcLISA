@@ -1,10 +1,7 @@
 useDynLib(scdcLISA)
 exportPattern("^[^\\.]")
 
-import(astsa)
 import(spatstat)
-import(KernSmooth)
-importFrom("graphics","plot","text")
-importFrom("stats","as.dist")
-importFrom("graphics", "par")
-importFrom("stats", "kernel")
+
+importFrom("graphics", "lines", "par", "plot", "text")
+importFrom("stats", "as.dist", "kernel")

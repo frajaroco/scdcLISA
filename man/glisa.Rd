@@ -9,7 +9,7 @@ gLISA(xy, ds, ks = "epanech", hs, lambda, correction = "isotropic")
 \item{xy}{Spatial coordinates \eqn{(x,y)} as objects of class 'ppp' to represent a two-dimensional point pattern. Includes information about the window in which the pattern was observed.}
 \item{ds}{A vector of distances \code{u} at which \eqn{g^{(i)}(u)} is computed.}
 \item{ks}{A kernel function for the spatial distances. The default is \code{"epanech"} the Epanechnikov kernel. It can also be \code{"box"} or \code{"biweight"}.}
-\item{hs}{A bandwidth of the kernel function \code{ks}.}
+\item{hs}{A bandwidth of the kernel function \code{ks}. If \code{hs} missing, the bandwidth is calculate using the function \code{bw.pcf} function in the R package \code{spatstat} which uses composite likelihood or generalized least squares cross-validation methods.}
 \item{lambda}{Vector of values of the spatial intensity function evaluated at the points \eqn{(x,y)} in \eqn{W}.} 
 \item{correction}{A character vector specifying the edge-correction(s) to be applied among "isotropic" and "none". The default is "isotropic".}
 }
@@ -19,12 +19,12 @@ A list containing:
 \item \code{glisa}:  A vector containing the values of the estimation of \eqn{g^{(i)}(r)} for each one of \eqn{n} points of the process by columns.
 \item \code{ds}: If \code{ds} is missing, a vector of distances \code{u} at which \eqn{\rho^{(2)}(u)} is computed under the restriction \eqn{0<\epsilon<r}.
 \item \code{kernel}: A vector of names and bandwidth of the spatial kernel.
-\item \code{lambda}: If \code{lambda} is missing, the estimate of the spatial mark correlation function is computed as for the homogeneous case, i.e. considering \eqn{(n-1)/|W|} as an estimate of the spatial intensity.
+\item \code{lambda}: If \code{lambda} is missing, the estimate of the spatial intensity function is computed as for the homogeneous case, i.e. considering \eqn{(n-1)/|W|} as an estimate of the spatial intensity.
 \item \code{rhotheo}: Theoretical value under a Poisson point processes model.
 }
 }
 \description{
-Computes an edge-corrected kernel estimator of the pair correlation local indicatos of spatial asociation (LISA) functions.
+Computes an edge-corrected kernel estimator of the pair correlation LISA functions.
 }
 \details{
 For more details see Stoyan and Stoyan (1994), Cressie and Collins (2001) and Baddeley et al. (2015).}

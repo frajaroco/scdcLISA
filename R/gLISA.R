@@ -22,10 +22,9 @@ gLISA <- function(xy,ds,ks="epanech",hs,lambda,correction="isotropic"){
   ker2 <- rep(0,3)
   ker2[ik] <- 1
   
-  d <- pairdist(xy)
-  
   if (missing(hs)){
-    hs <- dpik(as.dist(d),kernel=ks,range.x=c(min(d),max(d)))
+    bwl <- capture.output(bw.pcf(xy))
+    hs <- as.numeric(bwl[length(bwl)])
   }
   
   bsw <- xy$window
@@ -59,7 +58,7 @@ gLISA <- function(xy,ds,ks="epanech",hs,lambda,correction="isotropic"){
   }
 
   wrs <- array(0,dim=c(npt,npt))
-  
+  d <- pairdist(xy)
   if(correction=="isotropic"){
     wisot <- edge.Ripley(xy,d)
     wrs <- 1/wisot

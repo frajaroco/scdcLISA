@@ -24,5 +24,4 @@ install_github('frajaroco/scdcLISA')
 	note = {GitHub repository},
 	url = {\url{https://github.com/frajaroco/scdcLISA}}
 }
-
 ```

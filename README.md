@@ -18,11 +18,10 @@ install_github('frajaroco/scdcLISA')
 ## CiteBibtex
 ```
 @misc{rcg16,
-	author = {Francisco J. Rodr\'{i}guez-Cort\'{e}s} and Jonatan A. Gonz\'{a}lez}
-	title = {scdcLISA: Sptial cluster detection and classification through product density LISA functions},
+	author = {Francisco J. Rodr\'{i}guez-Cort\'{e}s and Jonatan A. Gonz\'{a}lez}
+	title = {scdcLISA: Sptial cluster detection and classification through LISA functions},
 	year = {2016},
 	note = {GitHub repository},
 	url = {\url{https://github.com/frajaroco/scdcLISA}}
 }
-
 ```

@@ -30,12 +30,12 @@ C
             if (kerns.ne.0d0) then
 C     none   
               if (edge(1).eq.1) then
-                 c(p)=((n-1)*hij)/(lamd(i)*lamd(j))
+                 c(p)=((n-1))/(lamd(i)*lamd(j))
                  phi(p,iu)=kerns/s(iu)
               end if                         
 C    isotropic
               if (edge(2).eq.1) then  
-                 c(p)=((n-1)*hij*wrs(i,j))/(lamd(i)*lamd(j))
+                 c(p)=((n-1)*wrs(i,j))/(lamd(i)*lamd(j))
                  phi(p,iu)=kerns/s(iu)                
               end if
             end if

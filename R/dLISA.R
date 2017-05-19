@@ -81,7 +81,7 @@ id.glisa <- function(il,d,npt,ds,nds,ker2,hs,lambda,wrs,correc2,area){
                      ker2=as.integer(ker2),hs=as.double(hs),lambda=as.double(lambda),wrs=as.double(wrs),correc2=as.integer(correc2),
                      (c.lisa),(phi.lisa),PACKAGE="scdcLISA")
   
-  c.lisa <- dlisai[[11]]/area
+  c.lisa <- dlisai[[11]]/(2*pi*area)
   phi.lisa <- dlisai[[12]]
   
   return(list(c.lisa=c.lisa,phi.lisa=phi.lisa))

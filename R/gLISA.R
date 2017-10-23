@@ -23,8 +23,7 @@ gLISA <- function(xy,ds,ks="epanech",hs,lambda,correction="isotropic"){
   ker2[ik] <- 1
   
   if (missing(hs)){
-    bwl <- capture.output(bw.pcf(xy))
-    hs <- as.numeric(bwl[length(bwl)])
+    hs <- bw.pcf(xy)[1]
   }
   
   bsw <- xy$window

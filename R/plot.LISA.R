@@ -1,12 +1,12 @@
-plot.LISA <- function(pl,...){
+plot.LISA <- function(x,...){
   
-  verifyclass(pl$lisa, "matrix")
-  verifyclass(pl$ds, "numeric" )
-  verifyclass(pl$kernel, "character")
-  verifyclass(pl$githeo, "numeric")
+  verifyclass(x$lisa.g, "matrix")
+  verifyclass(x$ds, "numeric" )
+  verifyclass(x$kernel, "character")
+  verifyclass(x$githeo, "numeric")
   
-  par(mfrow = c(1, 1))
-  plot(pl$ds,pl$lisa[,1], col = "#6B6B6B", type = "l",xlab = "distances", ylab = "LISA", main = "Pair correlation LISA functions", ylim=(c(0,max(pl$lisa))),...)
-  for (i in 2:dim(pl$lisa)[2]) {lines(pl$ds,pl$lisa[,i], col = "#6B6B6B")}
-  lines(pl$ds, rep(pl$githeo, length(pl$ds)), col = "red")
+  par(mfrow = c(1,1))
+  plot(x$ds,x$lisa.g[,1], col = "#6B6B6B", type = "l",xlab = "distances", ylab = "LISA", main = "Pair correlation LISA functions", ylim=(c(0,max(x$lisa.g))),...)
+  for (i in 2:dim(x$lisa.g)[2]) {lines(x$ds,x$lisa.g[,i], col = "#6B6B6B")}
+  lines(x$ds, rep(x$githeo, length(x$ds)), col = "red")
 }

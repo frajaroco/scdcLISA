@@ -2,10 +2,11 @@
 \alias{plot.numbers}
 \title{Plot of label points}
 \description{Draws a text label at a given x and y coordinate into a spatial point pattern}
-\usage{plot.numbers(xy,\dots)}
+\usage{\method{plot}{numbers}(x,...)}
+
 \arguments{
-\item{xy}{The spatial point pattern to be plotted. An object of class "ppp"}
-\item{\dots}{Arguments to be passed to methods, such as graphical parameters (see par)}
+\item{x}{The spatial point pattern to be plotted. An object of class "ppp"}
+\item{...}{Arguments to be passed to methods, such as graphical parameters (see par)}
 }
 \details{If necessary, more details than the description above}
 \value{

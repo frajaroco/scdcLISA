@@ -2,9 +2,9 @@
 \alias{plot.LISA}
 \title{Plot of LISA functions}
 \description{Plot method for LISA functions of a point pattern}
-\usage{plot.LISA(pl,...)}
+\usage{\method{plot}{LISA}(x,...)}
 \arguments{
-\item{pl}{An object of class "list", containing four variables attached to LISA functions (usually calculated through \code{gLISA} function).}
+\item{x}{An object of class "list", containing four variables attached to LISA functions (usually calculated through \code{gLISA} function).}
 \item{\dots}{Arguments to be passed to methods, such as graphical parameters (see par)}
 }
 \details{If necessary, more details than the description above}

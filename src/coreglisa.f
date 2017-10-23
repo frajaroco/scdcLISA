@@ -2,7 +2,7 @@ C
 C     Francisco J. Rodriguez-Cortes, March 2017 
 C
 C     This function provides an edge-corrected kernel based estimator 
-C     of the spatial pair correlation LISA functions.
+C     of the pair correlation LISA functions.
 C
 
        subroutine coreglisa(i,d,n,s,ns,ks,hs,lamd,wrs,edge,glisa)
@@ -24,7 +24,7 @@ C
                   else if (ks(3).eq.1) then
                    kerns=qkernel((s(iu)-hij)/hs,hs)
               end if
-            if (kerns.ne.0d0) then
+            if (kerns.ne.0) then
 C     none   
               if (edge(1).eq.1) then
                  wij=kerns/(lamd(i)*lamd(j)*s(iu))

@@ -2,7 +2,7 @@
 \alias{plot.LISA}
 \title{Plot of LISA functions}
 \description{Plot method for LISA functions of a point pattern}
-\usage{plot.LISA(pl, ...)}
+\usage{plot.LISA(pl,...)}
 \arguments{
 \item{pl}{An object of class "list", containing four variables attached to LISA functions (usually calculated through \code{gLISA} function).}
 \item{\dots}{Arguments to be passed to methods, such as graphical parameters (see par)}
@@ -25,7 +25,7 @@ Interdisciplinary Statistics Series, CRC Press, Boca Raton, Florida.
 
 # Realisations of the homogeneous Poisson processes
 pattern <- humberside
-pl <- gLISA(pattern, ks = "epanech", correction = "isotropic")
+pl <- gLISA(pattern, ks = "epanechnikov", correction = "isotropic")
 plot.LISA(pl)
 
 ## End(Not run)

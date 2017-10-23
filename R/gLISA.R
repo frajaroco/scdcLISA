@@ -1,4 +1,4 @@
-gLISA <- function(xy,ds,ks="epanech",hs,lambda,correction="isotropic"){
+gLISA <- function(xy,ds,ks="epanechnikov",hs,lambda,correction="isotropic"){
 
   verifyclass(xy, "ppp")
   
@@ -12,7 +12,7 @@ gLISA <- function(xy,ds,ks="epanech",hs,lambda,correction="isotropic"){
   correc2 <- rep(0,2)
   correc2[id] <- 1	
   
-  ker <- c("box","epanech","biweight")
+  ker <- c("rectangular","epanechnikov","biweight")
   ik <- match(ks,ker,nomatch=NA)
   if (any(nbk <- is.na(ik))){
     messnbk <- paste("unrecognised kernel function:",paste(dQuote(ks[nbk]),collapse=","))
@@ -23,7 +23,7 @@ gLISA <- function(xy,ds,ks="epanech",hs,lambda,correction="isotropic"){
   ker2[ik] <- 1
   
   if (missing(hs)){
-    hs <- bw.pcf(xy)[1]
+    hs <- bw.pcf(X=xy,kernel=ks)[1]
   }
   
   bsw <- xy$window
@@ -31,7 +31,7 @@ gLISA <- function(xy,ds,ks="epanech",hs,lambda,correction="isotropic"){
   if (missing(ds)){
     rect <- as.rectangle(bsw)
     maxd <- min(diff(rect$xrange),diff(rect$yrange))/4
-    ds <- seq(hs,maxd,len=51)[-1]
+    ds <- seq(hs,maxd,len=201)[-1]
     ds <- sort(ds)
   }
   if(ds[1]==0){
@@ -44,7 +44,7 @@ gLISA <- function(xy,ds,ks="epanech",hs,lambda,correction="isotropic"){
   il <- seq(1,npt)
   nds <- length(ds)
   area <- area(bsw)
-  rhotheo <- 1+(1/(npt-1))
+  githeo <- 1+(1/(npt-1))
   
   if(missing(lambda)){
     misl <- 1
@@ -58,6 +58,7 @@ gLISA <- function(xy,ds,ks="epanech",hs,lambda,correction="isotropic"){
 
   wrs <- array(0,dim=c(npt,npt))
   d <- pairdist(xy)
+  
   if(correction=="isotropic"){
     wisot <- edge.Ripley(xy,d)
     wrs <- 1/wisot
@@ -65,7 +66,7 @@ gLISA <- function(xy,ds,ks="epanech",hs,lambda,correction="isotropic"){
   
   lisa.g <- sapply(il, function(il) i.glisa(il,d,npt,ds,nds,ker2,hs,lambda,wrs,correc2,area),simplify="array")
   
-  return(list(lisa.g=lisa.g,ds=ds,kernel=kernel,lambda=lambda,rhotheo=rhotheo))
+  invisible(return(list(lisa.g=lisa.g,ds=ds,kernel=kernel,lambda=lambda,githeo=githeo)))
 }
 
 i.glisa <- function(il,d,npt,ds,nds,ker2,hs,lambda,wrs,correc2,area){
@@ -74,8 +75,11 @@ i.glisa <- function(il,d,npt,ds,nds,ker2,hs,lambda,wrs,correc2,area){
 	
   storage.mode(glisa) <- "double"
 
- glisai <- .Fortran("coreglisa",il=as.integer(il),d=as.double(d),npt=as.integer(npt),ds=as.double(ds),nds=as.integer(nds),
-                   ker2=as.integer(ker2),hs=as.double(hs),lambda=as.double(lambda),wrs=as.double(wrs),correc2=as.integer(correc2),
+ glisai <- .Fortran("coreglisa",il=as.integer(il),d=as.double(d),
+                    npt=as.integer(npt),ds=as.double(ds),
+                    nds=as.integer(nds),ker2=as.integer(ker2),
+                    hs=as.double(hs),lambda=as.double(lambda),
+                    wrs=as.double(wrs),correc2=as.integer(correc2),
                    (glisa),PACKAGE="scdcLISA")
  
  glisas <- ((npt-1)*glisai[[11]])/(2*pi*area)

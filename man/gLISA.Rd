@@ -8,13 +8,13 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-gLISA(xy, ds, ks = "epanech", hs, lambda, correction = "isotropic")
+gLISA(xy, ds, ks = "epanechnikov", hs, lambda, correction = "isotropic")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{xy}{Spatial coordinates \eqn{(x,y)} as objects of class 'ppp' to represent a two-dimensional point pattern. Includes information about the window in which the pattern was observed.}
 \item{ds}{A vector of distances \code{u} at which \eqn{g^{(i)}(u)} is computed.}
-\item{ks}{A kernel function for the spatial distances. The default is \code{"epanech"} the Epanechnikov kernel. It can also be \code{"box"} or \code{"biweight"}.}
+\item{ks}{A kernel function for the spatial distances. The default is \code{"epanechnikov"} the Epanechnikov kernel. It can also be \code{"rectangular"} or \code{"biweight"}.}
 \item{hs}{A bandwidth of the kernel function \code{ks}. If \code{hs} missing, the bandwidth is calculate using the function \code{bw.pcf} function in the R package \code{spatstat} which uses composite likelihood or generalized least squares cross-validation methods.}
 \item{lambda}{Vector of values of the spatial intensity function evaluated at the points \eqn{(x,y)} in \eqn{W}.} 
 \item{correction}{A character vector specifying the edge-correction(s) to be applied among "isotropic" and "none". The default is "isotropic".}

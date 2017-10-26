@@ -1,4 +1,4 @@
-gLISA <- function(xy,ds,ks="epanechnikov",hs,lambda,correction="isotropic"){
+gLISA <- function(xy,ds,ks="epanechnikov",hs,inhom=FALSE,correction="isotropic"){
 
   verifyclass(xy, "ppp")
   
@@ -31,7 +31,7 @@ gLISA <- function(xy,ds,ks="epanechnikov",hs,lambda,correction="isotropic"){
   if (missing(ds)){
     rect <- as.rectangle(bsw)
     maxd <- min(diff(rect$xrange),diff(rect$yrange))/4
-    ds <- seq(hs,maxd,len=201)[-1]
+    ds <- seq(hs,maxd,len=301)[-1]
     ds <- sort(ds)
   }
   if(ds[1]==0){
@@ -46,14 +46,10 @@ gLISA <- function(xy,ds,ks="epanechnikov",hs,lambda,correction="isotropic"){
   area <- area(bsw)
   githeo <- 1+(1/(npt-1))
   
-  if(missing(lambda)){
-    misl <- 1
+  if(inhom==FALSE){
     lambda <- rep((npt-1)/area,npt)
-  } else {
-    misl <- 0
-    if (length(lambda)==1){
-      lambda <- rep(lambda,npt)
-    }
+  } else{
+    lambda <- as.vector(density.ppp(xy,diggle=TRUE,at="points",leaveoneout=TRUE))
   }
 
   wrs <- array(0,dim=c(npt,npt))

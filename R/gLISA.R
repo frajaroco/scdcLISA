@@ -1,4 +1,4 @@
-gLISA <- function(xy,ds,ks="epanechnikov",hs,inhom=FALSE,correction="isotropic"){
+gLISA <- function(xy,ds,ks="epanechnikov",hs,lambda,correction="isotropic"){
 
   verifyclass(xy, "ppp")
   
@@ -45,19 +45,18 @@ gLISA <- function(xy,ds,ks="epanechnikov",hs,inhom=FALSE,correction="isotropic")
   nds <- length(ds)
   area <- area(bsw)
   githeo <- 1+(1/(npt-1))
-  
-  if(inhom==FALSE){
-    lambda <- rep((npt-1)/area,npt)
-  } else{
-    lambda <- as.vector(density.ppp(xy,diggle=TRUE,at="points",leaveoneout=TRUE))
-  }
+ 	
+ if(missing(lambda)){
+      lambda <- rep((npt-1)/area, npt)
+    }
+  if (length(lambda) == 1) lambda <- rep(lambda, npt)
+
 
   wrs <- array(0,dim=c(npt,npt))
   d <- pairdist(xy)
   
   if(correction=="isotropic"){
     wisot <- edge.Ripley(xy,d)
-    wrs <- 1/wisot
   }
   
   lisa.g <- sapply(il, function(il) i.glisa(il,d,npt,ds,nds,ker2,hs,lambda,wrs,correc2,area),simplify="array")

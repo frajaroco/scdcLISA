@@ -1,5 +1,5 @@
 gLISA <- function(xy, ds, ks = "epanechnikov", hs, lambda, correction = "isotropic"){
-
+  
   verifyclass(xy, "ppp")
   correc <- c("none", "isotropic")
   id <- match(correction, correc, nomatch = NA)
@@ -58,16 +58,16 @@ gLISA <- function(xy, ds, ks = "epanechnikov", hs, lambda, correction = "isotrop
 
 i.glisa <- function(il, d, npt, ds, nds, ker2, hs, lambda, wrs, correc2, area){
   glisa <- rep(0, nds)
-	storage.mode(glisa) <- "double"
-	
-	glisai <- .Fortran("coreglisa",il = as.integer(il), d = as.double(d),
-	                   npt = as.integer(npt), ds = as.double(ds),
-	                   nds = as.integer(nds), ker2 = as.integer(ker2),
-	                   hs = as.double(hs), lambda = as.double(lambda),
-	                   wrs = as.double(wrs), correc2 = as.integer(correc2),
-	                   (glisa), PACKAGE = "scdcLISA")
- 
- glisas <- ((npt - 1) * glisai[[11]]) / (2 * pi * area)
-
- return(glisas = glisas)
+  storage.mode(glisa) <- "double"
+  
+  glisai <- .Fortran("coreglisa",il = as.integer(il), d = as.double(d),
+                     npt = as.integer(npt), ds = as.double(ds),
+                     nds = as.integer(nds), ker2 = as.integer(ker2),
+                     hs = as.double(hs), lambda = as.double(lambda),
+                     wrs = as.double(wrs), correc2 = as.integer(correc2),
+                     (glisa), PACKAGE = "scdcLISA")
+  
+  
+  glisas <- ((npt - 1) * glisai[[11]]) / (2 * pi * area)
+  return(glisas = glisas)
 }

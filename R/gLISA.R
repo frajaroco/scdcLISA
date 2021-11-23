@@ -39,7 +39,7 @@ gLISA <- function(xy, ds, ks = "epanechnikov", hs, lambda, correction = "isotrop
   npt <- xy$n
   il <- seq(1, npt)
   nds <- length(ds)
-  area <- area(bsw)
+  area <- area.owin(bsw)
   githeo <- 1 + (1 / (npt - 1))
   
   if(missing(lambda)) lambda <- rep((npt - 1) / area, npt)

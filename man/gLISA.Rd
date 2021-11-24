@@ -8,7 +8,7 @@
 \item{ds}{A vector of distances \code{u} at which \eqn{g^{(i)}(u)} is computed.}
 \item{ks}{A kernel function for the spatial distances. The default is \code{"epanechnikov"} the Epanechnikov kernel. It can also be \code{"rectangular"} or \code{"biweight"}.}
 \item{hs}{A bandwidth of the kernel function \code{ks}. If \code{hs} missing, the bandwidth is calculate using the function \code{bw.pcf} function in the R package \code{spatstat} which uses composite likelihood or generalised least squares cross-validation methods.}
-\item{inhom}{logical; if FALSE, spatial intensity is computed for the homogeneous case as \eqn{(n-1)/|W|}. If TRUE, non-parametric kernel-based estimator with the Jones-Diggle improved edge-correction is computing.} 
+\item{lambda}{Values of the estimated intensity function. By default the spatial intensity is computed for the homogeneous case.} 
 \item{correction}{A character vector specifying the edge-correction(s) to be applied among "isotropic" and "none". The default is "isotropic".}
 }
 \value{
@@ -42,7 +42,8 @@ plot.LISA(out)
 
 # This function provides an edge-corrected kernel estimator of
 # the pair correlation LISA functions assuming inhomogeneity.
-outi <- gLISA(pp,inhom=TRUE)
+den <- density.ppp(pp, at="points")
+outi <- gLISA(pp, lambda = den)
 outi
 
 # R plot
